@@ -24,6 +24,7 @@ export const config = {
     //
     specs: [
         './test/specs/**/*.js'
+        //'./test/specs/**/elementsTest.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -135,7 +136,7 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['dot','spec'],
 
 
     
