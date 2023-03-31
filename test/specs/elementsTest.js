@@ -1,10 +1,15 @@
 import { Key } from 'webdriverio'
+import testUidPage from '../pageobjects/TestUidPage.js';
 
 describe('Test Web Page Shadow DOM', ()=> {
 
-    it('click to generate guid and copy to clipboard', async ()=>{
-        await browser.url('http://uitestingplayground.com/shadowdom')
+    beforeEach('run web page', async () => {
+        await testUidPage.openPage();
+        console.log("runs web page before each test");
         console.log(await browser.getUrl());
+    });
+
+    it('click to generate guid and copy to clipboard', async () => {
 
         await expect(browser).toHaveTitleContaining('Shadow DOM');
         const guidGenerator = $('div guid-generator');
@@ -42,6 +47,31 @@ describe('Test Web Page Shadow DOM', ()=> {
         await expect(copyUid).toEqual(guidActualValue);
         
         browser.pause(5000)
+    });
+
+    it('click to generate guid and copy to clipboard with page object model' ,async () => {
+
+        await expect(browser).toHaveTitleContaining('Shadow DOM');
+        
+        console.log(await testUidPage.configUidBtn.waitForClickable());
+        await expect(testUidPage.configUidBtn).toBeClickable();
+        
+        console.log(await testUidPage.copybtn.waitForClickable());
+        await expect(testUidPage.copybtn).toBeClickable();
+       
+
+        /* await guidGenerator.click();
+        await browser.keys([Key.Ctrl, 'a']);
+        await browser.keys([Key.Ctrl, 'c']); */
+        //Usando el copy del browser si da el valor esperado que se copia (o sea descomentando estas lineas), pero el copy del clipboard no esta funcionando
+        // y pega lo anterior que este copiado en ese computador
+       
+        await testUidPage.generateUid();
+
+        expectChai(await testUidPage.copyUid).to.equal(await testUidPage.guidActualValue);
+        
+        browser.pause(5000)
+
     });
 
 })
