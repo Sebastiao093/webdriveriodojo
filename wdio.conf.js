@@ -244,6 +244,13 @@ export const config = {
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
 
+    before: async () => {
+        const chai = await import('chai');
+        global.expectChai = chai.expect;
+        global.assert = chai.expect;
+        global.should = chai.expect;
+    },
+
 
     /**
      * Hook that gets executed after the suite has ended
